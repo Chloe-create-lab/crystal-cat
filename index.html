@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>星晶小猫</title>
+  <meta name="description" content="太空站断电了。小猫宇航员收集晶能，开启护盾穿过辐射区，启动返回舱。">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <div class="logo-face"></div>
+        <div class="logo-ear left"></div>
+        <div class="logo-ear right"></div>
+        <div class="logo-glass"></div>
+      </div>
+      <div class="brand-text">
+        <h1>星晶小猫</h1>
+        <span class="brand-sub">CRYSTAL CAT</span>
+      </div>
+    </div>
+
+    <div class="hud" id="hud" hidden>
+      <div class="pill pill-energy">
+        <span class="vbadge">晶能</span>
+        <progress id="hudEnergy" value="0" max="12" aria-label="晶能进度"></progress>
+        <span><strong id="hudEnergyNum">0</strong><span id="hudGoal"> / 12</span></span>
+      </div>
+      <div class="pill pill-shield" id="pillShield">
+        <span class="dot"></span><span id="hudShield">护盾就绪</span>
+      </div>
+      <div class="pill pill-time"><span class="dot"></span><strong id="hudTime">80</strong><span class="unit">秒</span></div>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn btn-shield" id="btnShield" type="button" hidden>护盾 · 3</button>
+      <button class="btn" id="btnPause" type="button" hidden>暂停</button>
+    </div>
+  </header>
+
+  <main class="stage" id="stage">
+    <canvas id="game" tabindex="-1" width="768" height="528" aria-label="星晶小猫游戏画面"></canvas>
+
+    <div class="overlay show" id="overlayMenu">
+      <div class="panel menu-panel">
+        <p class="eyebrow">废弃空间站 · 第 07 号舱段</p>
+        <h2>星晶小猫</h2>
+        <p class="menu-intro">站里的灯全灭了。小猫宇航员要捡够晶体，才能给返回舱点火回家。</p>
+        <ul class="rules">
+          <li><b>目标</b>　收集 <b>12 点晶能</b>，启动返回舱。</li>
+          <li><b>蓝晶 +1</b>　　紫晶 <b>+3</b>，但只有护盾开启时才能拾取。</li>
+          <li><b>护盾</b>　花 <b>3 点晶能</b>，持续 6 秒，免疫辐射与机器人。</li>
+          <li><b>辐射区</b>　没有护盾时每秒多掉 2 秒。</li>
+        </ul>
+        <p class="choice">晶能既是过关分数，也是开护盾的钱：先攒够再闯辐射区，还是少开一次盾多留分数，由你决定。</p>
+        <div class="panel-actions">
+          <button class="btn btn-primary" id="btnStart" type="button">开始探索</button>
+        </div>
+        <p class="hint">方向键 / WASD 移动 · 空格 开护盾 · ESC 暂停</p>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlayPause">
+      <div class="panel small-panel">
+        <h3>已暂停</h3>
+        <p class="muted">歇一会儿，晶能不会跑。</p>
+        <div class="panel-actions">
+          <button class="btn btn-primary" id="btnResume" type="button">继续</button>
+          <button class="btn" id="btnPauseRestart" type="button">重来</button>
+          <button class="btn btn-ghost" id="btnSound" type="button">音效 开</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlayResult">
+      <div class="panel small-panel">
+        <div class="result-head">
+          <div class="result-mark" id="resultMark" aria-hidden="true"></div>
+          <div><h3 id="resultTitle"></h3><p id="resultSub" class="muted"></p></div>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-primary" id="btnRetry" type="button">再试一次</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </main>
+
+  <nav class="touch-controls" aria-label="移动小猫">
+    <button type="button" data-dir="up" aria-label="向上">↑</button>
+    <button type="button" data-dir="left" aria-label="向左">←</button>
+    <button type="button" data-dir="down" aria-label="向下">↓</button>
+    <button type="button" data-dir="right" aria-label="向右">→</button>
+  </nav>
+  <p class="game-footer">捡晶能 · 开护盾 · 进辐射区拿紫晶</p>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
